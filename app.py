@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-import json, hashlib
+import json, hashlib, socket
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']           = 'mysql+pymysql://root:root@localhost/challenge_app'
@@ -30,11 +30,12 @@ class Messages(db.Model):
 
 def ValidasiLogin(Form):
     if Form:
+        ip_address    = socket.gethostbyname(socket.gethostname())
         hash_password = hashlib.sha1(Form['password'])
         hash_password = hash_password.hexdigest()
         DataUser = User.query.filter_by(username=Form['username'], password=hash_password).first()
         if DataUser:
-            AddLog = UserLog(user_id=DataUser.id, created_at=datetime.now())
+            AddLog = UserLog(user_id=DataUser.id, user_ip=ip_address, created_at=datetime.now())
             return {'username' : DataUser.username, 'created_at' : DataUser.password}
         else:
             return None
