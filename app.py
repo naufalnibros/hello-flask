@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, escape, redirect, session, url_for, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import desc
 from datetime import datetime
 import json, hashlib, socket
 
@@ -89,12 +90,12 @@ def dashboard():
         db.session.add(AddMessage)
         db.session.commit()
 
-    ModelsMessage = db.session.query(Messages, User).outerjoin(User, User.id == Messages.user_id).all()
+    ModelsMessage = db.session.query(Messages, User).outerjoin(User, User.id == Messages.user_id).order_by(desc(Messages.id)).all()
     return render_template("dashboard.html", data_user=DataUser, messages=ModelsMessage)
 
 @app.route("/history_user")
 def history_user():
-    Models = db.session.query(UserLog, User).outerjoin(User, User.id == UserLog.user_id).all()
+    Models = db.session.query(UserLog, User).outerjoin(User, User.id == UserLog.user_id).order_by(desc(UserLog.id)).all()
     return render_template('user-log.html', history_user=Models)
 
 @app.route("/logout")
