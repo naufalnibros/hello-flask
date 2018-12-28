@@ -36,6 +36,8 @@ def ValidasiLogin(Form):
         DataUser = User.query.filter_by(username=Form['username'], password=hash_password).first()
         if DataUser:
             AddLog = UserLog(user_id=DataUser.id, user_ip=ip_address, created_at=datetime.now())
+            db.session.add(AddLog)
+            db.session.commit()
             return {'username' : DataUser.username, 'created_at' : DataUser.password}
         else:
             return None
