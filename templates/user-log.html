@@ -24,7 +24,7 @@
 
   {% for value in history_user %}
   <div class="message-box">
-    <span> <b><i>{{ value.User.username }}</i></b> LOGIN PADA <b><i>{{ value.UserLog.created_at }}</i></b> </span>
+    <span> <b><i>{{ value.User.username }}</i></b> LOGIN PADA <b><i>{{ value.UserLog.created_at | datetime }}</i></b> </span>
   </div>
   {% endfor %}
 

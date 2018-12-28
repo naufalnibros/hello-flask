@@ -29,6 +29,15 @@ class Messages(db.Model):
     message     = db.Column(db.Text)
     created_at  = db.Column(db.Text)
 
+def format_datetime(value, format = 'default'):
+    date_object = datetime.strptime(value, '%Y-%m-%d %H:%M:%S.%f')
+    if format == 'default':
+        date_string = datetime.strftime(date_object, '%d-%m-%Y')
+    else:
+        date_string = datetime.strftime(date_object, format)
+    return date_string
+
+app.jinja_env.filters['datetime'] = format_datetime
 
 def ValidasiLogin(Form):
     if Form:
@@ -95,6 +104,8 @@ def dashboard():
 
 @app.route("/history_user")
 def history_user():
+    tanggal = datetime.strptime('2018-12-28 23:34:38.905394', '%Y-%m-%d %H:%M:%S.%f')
+    print(datetime.strftime(tanggal,'%b %d, %Y'))
     Models = db.session.query(UserLog, User).outerjoin(User, User.id == UserLog.user_id).order_by(desc(UserLog.id)).all()
     return render_template('user-log.html', history_user=Models)
 
