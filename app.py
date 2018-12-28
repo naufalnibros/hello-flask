@@ -104,8 +104,6 @@ def dashboard():
 
 @app.route("/history_user")
 def history_user():
-    tanggal = datetime.strptime('2018-12-28 23:34:38.905394', '%Y-%m-%d %H:%M:%S.%f')
-    print(datetime.strftime(tanggal,'%b %d, %Y'))
     Models = db.session.query(UserLog, User).outerjoin(User, User.id == UserLog.user_id).order_by(desc(UserLog.id)).all()
     return render_template('user-log.html', history_user=Models)
 
