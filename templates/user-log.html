@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      .message-box {
+        padding: 2em;
+        border: 1px solid black;
+        width: 25em;
+        text-align: justify;
+        margin: 1em auto;
+      }
+      .message-box span{ text-transform: uppercase;}
+      .header-box { margin-bottom: 2em; text-align: center; }
+    </style>
+  </head>
+  <body>
+
+
+  <div class="message-box header-box">
+    <p>USER LOG</p>
+  </div>
+
+  {% for value in history_user %}
+  <div class="message-box">
+    <span> <b><i>{{ value.User.username }}</i></b> LOGIN PADA <b><i>{{ value.UserLog.created_at }}</i></b> </span>
+  </div>
+  {% endfor %}
+
+  </body>
+</html>

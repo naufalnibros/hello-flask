@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      .message-box {
+        padding: 2em;
+        border: 1px solid black;
+        width: 25em;
+        text-align: justify;
+        margin: 1em auto;
+      }
+      .logout {display: block; border: 1px solid black; padding: 1em; margin-top: 12px; text-decoration: none; color: red;}
+      .message-box span{ text-transform: uppercase;}
+      .header-box { margin-bottom: 2em; text-align: center; }
+      .header-box p {text-transform: uppercase;}
+      .message-box textarea {width: 100%}
+      .btn {
+        border: 1px solid #57aaca;
+        background-color: #359fc8;
+        color: #FFFFFF;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 1em 45.3%;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+
+
+  <div class="message-box header-box">
+    <p>SELAMAT DATANG <b><i>{{ data_user['username'] }}</i></b> </p>
+    <a class="logout" href="{{ url_for('logout') }}">LOGOUT</a>
+  </div>
+
+  <div class="message-box header-box">
+    <form action="{{ url_for('dashboard') }}" method="post">
+      <textarea name="message" rows="8" required></textarea>
+      <button class="btn" type="submit" name="button">POST</button>
+    </form>
+  </div>
+
+  {% for value in messages %}
+  <div class="message-box">
+    <span>DIBUAT OLEH {{ value.User.username }} <br> PADA {{ value.Messages.created_at }} </span>
+    <p>{{ value.Messages.message }}</p>
+  </div>
+  {% endfor %}
+
+  </body>
+</html>
